@@ -1,0 +1,5 @@
+repos/
+infrastructure/env/*/terraform/.terraform
+infrastructure/env/*/terraform/.terraform.lock.hcl
+infrastructure/env/*/terraform/config.tfvars
+infrastructure/env/*/terraform/terraform.tfstate
