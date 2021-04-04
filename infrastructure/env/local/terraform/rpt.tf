@@ -1,7 +1,4 @@
-# This file was created to expose nginx
-# And the only thing you need to in order
-# to remove nginx completely
-# is to remove this file
+# React Para Trabalho
 
 # Image
 resource "docker_image" "rpt-image" {
