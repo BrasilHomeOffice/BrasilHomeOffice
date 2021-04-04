@@ -3,6 +3,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd $DIR && cd ../utils
 source variables.sh
 
+mkdir -p $REPOS_DIR
+
 # React Para Trabalho
 cd $REPOS_DIR
 echo "--------------------------------------------"

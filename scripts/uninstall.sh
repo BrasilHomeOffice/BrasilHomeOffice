@@ -2,8 +2,8 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $DIR/utils/variables.sh
 
-FLAG_REMOVE_LOCAL_CONFIG=1
-FLAG_REMOVE_REPOS=1
+FLAG_REMOVE_LOCAL_CONFIG="1"
+FLAG_REMOVE_REPOS="1"
 
 # ---
 # Destroy terraform
@@ -35,13 +35,14 @@ docker network rm brasilhomeoffice &> /dev/null
 # ---
 # Remove repos
 if [[ $FLAG_REMOVE_REPOS == "1" ]]; then
+  echo "-- Remove repos"
   rm -rf $REPOS_DIR
-  mkdir -p $REPOS_DIR
 fi
 
 # ---
 # Remove local config files
 if [[ $FLAG_REMOVE_LOCAL_CONFIG == "1" ]]; then
+  echo "-- Remove local config files"
   rm -f $TF_DIR/config.tfvars
 fi
 
