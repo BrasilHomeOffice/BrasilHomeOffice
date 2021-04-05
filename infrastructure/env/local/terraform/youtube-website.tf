@@ -4,7 +4,7 @@
 resource "docker_image" "youtube-website-image" {
   name = "youtube-website"
   keep_locally = true
-  force_remove = false
+  force_remove = true
 
   build {
     path = "../../../../"
@@ -32,38 +32,38 @@ resource "docker_container" "youtube-website-container" {
     container_path = "/app/public"
     host_path = abspath("../../../../repos/youtube-website/public")
   }
-  # volumes {
-  #   container_path = "/app/.babelrc"
-  #   host_path = abspath("../../../../repos/youtube-website/.babelrc")
-  # }
-  # volumes {
-  #   container_path = "/app/.gitignore"
-  #   host_path = abspath("../../../../repos/youtube-website/.gitignore")
-  # }
-  # volumes {
-  #   container_path = "/app/.upignore"
-  #   host_path = abspath("../../../../repos/youtube-website/.upignore")
-  # }
-  # volumes {
-  #   container_path = "/app/next.config.js"
-  #   host_path = abspath("../../../../repos/youtube-website/next.config.js")
-  # }
+  volumes {
+    container_path = "/app/.babelrc"
+    host_path = abspath("../../../../repos/youtube-website/.babelrc")
+  }
+  volumes {
+    container_path = "/app/.gitignore"
+    host_path = abspath("../../../../repos/youtube-website/.gitignore")
+  }
+  volumes {
+    container_path = "/app/.upignore"
+    host_path = abspath("../../../../repos/youtube-website/.upignore")
+  }
+  volumes {
+    container_path = "/app/next.config.js"
+    host_path = abspath("../../../../repos/youtube-website/next.config.js")
+  }
   volumes {
     container_path = "/app/package.json"
     host_path = abspath("../../../../repos/youtube-website/package.json")
   }
-  # volumes {
-  #   container_path = "/app/README.md"
-  #   host_path = abspath("../../../../repos/youtube-website/README.md")
-  # }
-  # volumes {
-  #   container_path = "/app/server.js"
-  #   host_path = abspath("../../../../repos/youtube-website/server.js")
-  # }
-  # volumes {
-  #   container_path = "/app/up.json"
-  #   host_path = abspath("../../../../repos/youtube-website/up.json")
-  # }
+  volumes {
+    container_path = "/app/README.md"
+    host_path = abspath("../../../../repos/youtube-website/README.md")
+  }
+  volumes {
+    container_path = "/app/server.js"
+    host_path = abspath("../../../../repos/youtube-website/server.js")
+  }
+  volumes {
+    container_path = "/app/up.json"
+    host_path = abspath("../../../../repos/youtube-website/up.json")
+  }
 
   # ---
   # Traefik labels
@@ -82,7 +82,7 @@ resource "docker_container" "youtube-website-container" {
   # Redirect to port 3000 inside the container
   # because `yarn dev` uses this port
   labels {
-    label = "traefik.http.services.rpt.loadbalancer.server.port"
-    value = "3000"
+    label = "traefik.http.services.youtube-website.loadbalancer.server.port"
+    value = "80"
   }
 }

@@ -3,7 +3,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 source $DIR/utils/variables.sh
 
 FLAG_REMOVE_LOCAL_CONFIG="1"
-FLAG_REMOVE_REPOS="1"
+FLAG_REMOVE_REPOS="0"
 
 # ---
 # Destroy terraform

@@ -29,19 +29,19 @@ resource "docker_container" "rpt-container" {
   #  put all the source code inside src folder
   # @QUESTION
   #  is it possible to compress this lot of lines?
-  volumes {
+  volumes { # move to src
     container_path = "/app/components"
     host_path = abspath("../../../../repos/rpt/components")
   }
-  volumes {
+  volumes { # move to src
     container_path = "/app/data"
     host_path = abspath("../../../../repos/rpt/data")
   }
-  volumes {
+  volumes { # move to src
     container_path = "/app/falcor"
     host_path = abspath("../../../../repos/rpt/falcor")
   }
-  volumes {
+  volumes { # move to src
     container_path = "/app/pages"
     host_path = abspath("../../../../repos/rpt/pages")
   }
@@ -49,11 +49,11 @@ resource "docker_container" "rpt-container" {
     container_path = "/app/public"
     host_path = abspath("../../../../repos/rpt/public")
   }
-  volumes {
+  volumes { # move to src
     container_path = "/app/styles"
     host_path = abspath("../../../../repos/rpt/styles")
   }
-  volumes {
+  volumes { # move to src
     container_path = "/app/utils"
     host_path = abspath("../../../../repos/rpt/utils")
   }
