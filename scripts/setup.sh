@@ -24,5 +24,5 @@ $SCRIPTS_DIR/git/clone_all_repos.sh
 # Start terraform
 cd $TF_DIR
 terraform init -var-file="./config.tfvars"
-terraform apply --auto-approve -var-file="./config.tfvars"
+terraform apply -var-file="./config.tfvars" --auto-approve
 cd $DIR

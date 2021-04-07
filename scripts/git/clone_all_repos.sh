@@ -32,3 +32,15 @@ else
   echo "- Clonned at $REPOS_DIR/youtube-website"
 fi
 echo "--------------------------------------------"
+
+# Youtube Website
+echo "--------------------------------------------"
+echo "- Clonning Youtube API"
+if [ -d "$REPOS_DIR/youtube-api" ]; then
+  echo "-   already exists"
+else
+  git clone git@github.com:shakegioh/brasilhomeoffice-youtube-api.git
+  mv brasilhomeoffice-youtube-api youtube-api
+  echo "- Clonned at $REPOS_DIR/youtube-api"
+fi
+echo "--------------------------------------------"

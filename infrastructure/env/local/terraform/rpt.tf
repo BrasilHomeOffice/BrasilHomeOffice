@@ -1,10 +1,12 @@
 # React Para Trabalho
 
 # Image
+
+
 resource "docker_image" "rpt-image" {
   name = "rpt"
   keep_locally = true
-  force_remove = false
+  force_remove = true
 
   build {
     path = "../../../../"

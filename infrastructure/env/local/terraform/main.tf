@@ -1,12 +1,12 @@
 # Variables
-variable "env_name" {
-  type = string
-  description = "Environment name (local, production, dev, staging, etc)"
-}
-variable "website_url" {
-  type = string
-  description = "The website url (http://local.brasilhomeoffice.com)"
-}
+# variable "env_name" {
+#   type = string
+#   description = "Environment name (local, production, dev, staging, etc)"
+# }
+# variable "website_url" {
+#   type = string
+#   description = "The website url (http://local.brasilhomeoffice.com)"
+# }
 variable "network_name" {
   type = string
   description = "Docker network name"
@@ -46,14 +46,14 @@ resource "docker_image" "traefik-image" {
   force_remove = true # Force remove to avoid bugs
 }
 
-# Traefik Whoami Image
-#   A simple container which display some env variables
-#   on a web server on port 80
-resource "docker_image" "traefik-whoami-image" {
-  name = "traefik/whoami:latest"
-  keep_locally = true
-  # Its just a simple little service, doesn't need force_remove = true
-}
+## Traefik Whoami Image
+##   A simple container which display some env variables
+##   on a web server on port 80
+#resource "docker_image" "traefik-whoami-image" {
+#  name = "traefik/whoami:latest"
+#  keep_locally = true
+#  # Its just a simple little service, doesn't need force_remove = true
+#}
 
 # ---
 # DOCKER CONTAINERS
@@ -130,28 +130,28 @@ resource "docker_container" "traefik-container" {
   }
 }
 
-# Traefik Whoami
-resource "docker_container" "traefik-whoami-container" {
-  name = "traefik-whoami-container"
-  image = docker_image.traefik-whoami-image.latest
-  tty = true
-
-  networks_advanced {
-    name = docker_network.network.name
-  }
-
-  # ---
-  # Traefik labels
-  labels {
-    label = "traefik.enable"
-    value = "true"
-  }
-  labels {
-    label = "traefik.http.routers.whoami.rule"
-    value = "Host(`ping.local.brasilhomeoffice.com`)"
-  }
-  labels {
-    label = "traefik.http.routers.whoami.entrypoints"
-    value = "web"
-  }
-}
+## Traefik Whoami
+#resource "docker_container" "traefik-whoami-container" {
+#  name = "traefik-whoami-container"
+#  image = docker_image.traefik-whoami-image.latest
+#  tty = true
+#
+#  networks_advanced {
+#    name = docker_network.network.name
+#  }
+#
+#  # ---
+#  # Traefik labels
+#  labels {
+#    label = "traefik.enable"
+#    value = "true"
+#  }
+#  labels {
+#    label = "traefik.http.routers.whoami.rule"
+#    value = "Host(`ping.local.brasilhomeoffice.com`)"
+#  }
+#  labels {
+#    label = "traefik.http.routers.whoami.entrypoints"
+#    value = "web"
+#  }
+#}
