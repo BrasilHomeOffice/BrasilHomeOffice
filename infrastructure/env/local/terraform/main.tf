@@ -76,6 +76,11 @@ resource "docker_container" "traefik-container" {
     external = 80
   }
 
+  ports {
+    internal = 3306
+    external = 3306
+  }
+
   # @REFERENCE_ONLY
   #  do not uncomment this
   # @INFRA_TODO

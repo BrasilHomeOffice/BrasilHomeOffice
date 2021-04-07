@@ -10,6 +10,7 @@ SCRIPTS_DIR="$BASE_DIR/scripts"
 INFRA_DIR="$BASE_DIR/infrastructure"
 ENV_DIR="$INFRA_DIR/env/$ENV_NAME" # infrastructure/local
 TF_DIR="$ENV_DIR/terraform" #infrastructure/local/terraform
+STORAGE_DIR="$INFRA_DIR/storage"
 
 REPOS_DIR="$BASE_DIR/repos"
 

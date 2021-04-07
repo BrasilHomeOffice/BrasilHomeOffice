@@ -18,6 +18,7 @@ For this project the following domains should be added to your hosts file.
 # https://vlog.brasilhomeoffice.com
 127.0.0.1                    vlog.local.brasilhomeoffice.com
 127.0.0.1                api-vlog.local.brasilhomeoffice.com
+127.0.0.1                 db-vlog.local.brasilhomeoffice.com
 # React para Trabalho
 # https://reactparatrabalho.com
 127.0.0.1                     rpt.local.brasilhomeoffice.com

@@ -94,87 +94,107 @@ resource "docker_container" "youtube-website-container" {
 #####################################################################
 # API
 
-## Image
-#resource "docker_image" "youtube-api-image" {
-#  name = "youtube-api"
-#  keep_locally = true
-#  force_remove = true
-#
-#  build {
-#    path = "../../../../"
-#    dockerfile = "./infrastructure/env/local/youtube-api/Dockerfile-api"
-#  }
-#}
-#
-## Container
-#resource "docker_container" "youtube-api-container" {
-#  name    = "youtube-api"
-#  image   = docker_image.youtube-api-image.latest
-#  tty = true
-#
-#  networks_advanced {
-#    name = docker_network.network.name
-#  }
-#
-#  env = [
-#    # "DATABASE_URL=server=youtube-db-container;uid=youtube-db-user;pwd=youtube-db-pass;database=youtube-db"
-#    "DATABASE_URL=mysql://youtube-db-user:youtube-db-pass@youtube-db-container:3306/youtube-db"
-#  ]
-#
-#  # ---
-#  # Traefik labels
-#  labels {
-#    label = "traefik.enable"
-#    value = "true"
-#  }
-#  labels {
-#    label = "traefik.http.routers.youtube-api.rule"
-#    value = "Host(`vlog-api.local.brasilhomeoffice.com`)"
-#  }
-#  labels {
-#    label = "traefik.http.routers.youtube-api.entrypoints"
-#    value = "web"
-#  }
-#  # Redirect to port 3000 inside the container
-#  # because `yarn dev` uses this port
-#  labels {
-#    label = "traefik.http.services.youtube-api.loadbalancer.server.port"
-#    value = "80"
-#  }
-#}
+# Image
+resource "docker_image" "youtube-api-image" {
+ name = "youtube-api"
+ keep_locally = true
+ force_remove = true
+
+ build {
+   path = "../../../../"
+   dockerfile = "./infrastructure/env/local/youtube-website/Dockerfile-api"
+ }
+}
+
+# Container
+resource "docker_container" "youtube-api-container" {
+ name    = "youtube-api"
+ image   = docker_image.youtube-api-image.latest
+ tty = true
+
+ networks_advanced {
+   name = docker_network.network.name
+ }
+
+ env = [
+   # "DATABASE_URL=mysql://root:root@db-vlog.local.brasilhomeoffice.com:3306/youtube-db"
+   "DATABASE_URL=mysql://root:root@youtube-db:3306/youtube-db"
+ ]
+
+ # ---
+ # Traefik labels
+ labels {
+   label = "traefik.enable"
+   value = "true"
+ }
+ labels {
+   label = "traefik.http.routers.youtube-api.rule"
+   value = "Host(`api-vlog.local.brasilhomeoffice.com`)"
+ }
+ labels {
+   label = "traefik.http.routers.youtube-api.entrypoints"
+   value = "web"
+ }
+ # Redirect to port inside the container
+ # because `yarn dev` uses this port
+ labels {
+   label = "traefik.http.services.youtube-api.loadbalancer.server.port"
+   value = "4000"
+ }
+}
 
 
 
 ######################################################################
-## Database
-#
+# Database
+
+
 ## Image
-#resource "docker_image" "youtube-db-image" {
-#  name = "mariadb:10.5"
-#  keep_locally = true
-#  force_remove = false
-#}
-#
-## Container
-#resource "docker_container" "youtube-db-container" {
-#  name = "youtube-db"
-#  image = docker_image.youtube-db-image.latest
-#
-#  networks_advanced {
-#    name = docker_network.network.name
-#  }
-#
-#  # Environment variables
-#  env = [
-#    "MYSQL_ROOT_PASSWORD=root",
-#    "MYSQL_DATABASE=youtube-db",
-#    "MYSQL_USER=youtube-db-user",
-#    "MYSQL_PASSWORD=youtube-db-pass"
-#  ]
-#
-#  # Save data locally
-#  volumes {
-#    host_path = abspath("../../../storage/youtube-db")
-#    container_path = "/var/lib/mysql"
-#  }
-#}
+resource "docker_image" "youtube-db-image" {
+  name = "mariadb:10.5"
+  keep_locally = true
+  force_remove = false
+}
+
+# Container
+resource "docker_container" "youtube-db-container" {
+  name = "youtube-db"
+  image = docker_image.youtube-db-image.latest
+
+  networks_advanced {
+    name = docker_network.network.name
+  }
+
+  # Environment variables
+  env = [
+    "MYSQL_ROOT_PASSWORD=root",
+    "MYSQL_DATABASE=youtube-db",
+    "MYSQL_USER=youtube-db-user",
+    "MYSQL_PASSWORD=youtube-db-pass"
+  ]
+
+  # Save data locally
+  volumes {
+    host_path = abspath("../../../storage/youtube-db")
+    container_path = "/var/lib/mysql"
+  }
+
+  # ---
+  # Traefik labels
+  labels {
+    label = "traefik.enable"
+    value = "true"
+  }
+  labels {
+    label = "traefik.tcp.routers.youtube-db.rule"
+    value = "HostSNI(`*`)"
+  }
+  labels {
+    label = "traefik.tcp.routers.youtube-db.entrypoints"
+    value = "mariadb"
+  }
+  labels {
+    label = "traefik.tcp.services.youtube-db.loadbalancer.server.port"
+    value = "3306"
+  }
+}
