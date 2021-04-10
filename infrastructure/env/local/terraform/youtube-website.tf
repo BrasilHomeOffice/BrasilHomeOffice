@@ -134,9 +134,13 @@ resource "docker_container" "youtube-api-container" {
    value = "Host(`api-vlog.local.brasilhomeoffice.com`)"
  }
  labels {
-   label = "traefik.http.routers.youtube-api.entrypoints"
-   value = "web"
- }
+    label = "traefik.http.routers.youtube-api.entrypoints"
+    value = "websecure"
+  }
+  labels {
+    label = "traefik.http.routers.youtube-api.tls"
+    value = "true"
+  }
  # Redirect to port inside the container
  # because `yarn dev` uses this port
  labels {

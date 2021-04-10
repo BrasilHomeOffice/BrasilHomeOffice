@@ -14,7 +14,7 @@ $SCRIPTS_DIR/git/clone_all_repos.sh
 # -------------------------
 # TERRAFORM
 
-sudo chmod -R 777 $INFRA_DIR
+sudo chmod -R 777 $STORAGE_DIR
 
 # ---
 # Create `local/terraform/config.tfvars`
