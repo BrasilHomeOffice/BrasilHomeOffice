@@ -81,17 +81,10 @@ resource "docker_container" "traefik-container" {
     external = 3306
   }
 
-  # @REFERENCE_ONLY
-  #  do not uncomment this
-  # @INFRA_TODO
-  #  do we still need https on local environment?
-  # 
-  # ---
-  # When enable HTTPS
-  # ports {
-  #   internal = 443
-  #   external = 443
-  # }
+  ports {
+    internal = 443
+    external = 443
+  }
 
   # @INFRA_TODO
   #  When traefik is reachable through domain name

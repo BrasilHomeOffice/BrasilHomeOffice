@@ -80,10 +80,12 @@ resource "docker_container" "youtube-website-container" {
   }
   labels {
     label = "traefik.http.routers.youtube-website.entrypoints"
-    value = "web"
+    value = "websecure"
   }
-  # Redirect to port 3000 inside the container
-  # because `yarn dev` uses this port
+  labels {
+    label = "traefik.http.routers.youtube-website.tls"
+    value = "true"
+  }
   labels {
     label = "traefik.http.services.youtube-website.loadbalancer.server.port"
     value = "80"
