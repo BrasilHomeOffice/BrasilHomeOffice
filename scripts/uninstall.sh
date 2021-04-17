@@ -32,6 +32,14 @@ rm -rf $TF_DIR/.terraform $TF_DIR/.terraform.lock.hcl $TF_DIR/terraform.tfstate 
 #   it happened before, I don't know why
 docker network rm brasilhomeoffice &> /dev/null
 
+# Temp
+docker rm youtube-website
+docker rm youtube-api
+docker rm youtube-db
+docker rmi youtube-website
+docker rmi youtube-api
+
+
 # ---
 # Remove repos
 if [[ $FLAG_REMOVE_REPOS == "1" ]]; then

@@ -123,6 +123,13 @@ resource "docker_container" "youtube-api-container" {
    "DATABASE_URL=mysql://root:root@youtube-db:3306/youtube-db"
  ]
 
+  # ---
+  # Enable hot reload
+  volumes {
+    container_path = "/app/src"
+    host_path = abspath("../../../../repos/youtube-api/src")
+  }
+
  # ---
  # Traefik labels
  labels {
