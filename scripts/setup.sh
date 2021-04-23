@@ -48,3 +48,7 @@ cd $TF_DIR
 terraform init -var-file="./config.tfvars"
 terraform apply -var-file="./config.tfvars" --auto-approve
 cd $DIR
+
+# ---
+# Run migrations
+docker exec youtube-api yarn migrate:dev

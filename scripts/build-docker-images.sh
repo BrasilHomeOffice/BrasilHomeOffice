@@ -13,8 +13,6 @@
 BUILD_API=1
 # Build youtube-website
 BUILD_WEBSITE=1
-# Build youtube-db
-BUILD_DB=0
 #####################################################################
 
 DIR=$(dirname $0)
