@@ -1,5 +1,11 @@
-FROM node:alpine
+FROM node:14.16-alpine3.13
 WORKDIR /app
+
+COPY ./repos/youtube-api/package.json /app
+# https://stackoverflow.com/a/65138098/1791115
+COPY ./repos/youtube-api/*yarn.lock /app
+COPY ./repos/youtube-api/prisma /app/prisma
+RUN yarn install && yarn prisma:generate
+
 COPY ./repos/youtube-api /app
-RUN yarn install
 CMD ["yarn", "dev"]

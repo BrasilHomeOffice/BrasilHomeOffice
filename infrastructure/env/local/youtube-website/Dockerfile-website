@@ -1,6 +1,10 @@
-FROM node:alpine
+FROM node:14.16-alpine3.13
 WORKDIR /app
-COPY ./repos/youtube-website /app
-RUN rm -f package-lock.json yarn.lock
+
+COPY ./repos/youtube-website/package.json /app
+# https://stackoverflow.com/a/65138098/1791115
+COPY ./repos/youtube-website/*yarn.lock /app
 RUN yarn install
+
+COPY ./repos/youtube-website /app
 CMD ["yarn", "dev"]

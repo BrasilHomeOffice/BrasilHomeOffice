@@ -4,21 +4,22 @@
 # Nextjs Website
 
 # Image
-resource "docker_image" "youtube-website-image" {
-  name = "youtube-website"
-  keep_locally = true
-  force_remove = true
+# resource "docker_image" "youtube-website-image" {
+#   name = "youtube-website"
+#   keep_locally = true
+#   force_remove = true
 
-  build {
-    path = "../../../../"
-    dockerfile = "./infrastructure/env/local/youtube-website/Dockerfile-website"
-  }
-}
+#   build {
+#     path = "../../../../"
+#     dockerfile = "./infrastructure/env/local/youtube-website/Dockerfile-website"
+#   }
+# }
 
 # Container
 resource "docker_container" "youtube-website-container" {
   name    = "youtube-website"
-  image   = docker_image.youtube-website-image.latest
+  # image   = docker_image.youtube-website-image.latest
+  image = "youtube-website"
   tty = true
 
   networks_advanced {
@@ -97,31 +98,32 @@ resource "docker_container" "youtube-website-container" {
 # API
 
 # Image
-resource "docker_image" "youtube-api-image" {
- name = "youtube-api"
- keep_locally = true
- force_remove = true
+# resource "docker_image" "youtube-api-image" {
+#  name = "youtube-api"
+#  keep_locally = true
+#  force_remove = true
 
- build {
-   path = "../../../../"
-   dockerfile = "./infrastructure/env/local/youtube-website/Dockerfile-api"
- }
-}
+#  build {
+#    path = "../../../../"
+#    dockerfile = "./infrastructure/env/local/youtube-website/Dockerfile-api"
+#  }
+# }
 
 # Container
 resource "docker_container" "youtube-api-container" {
- name    = "youtube-api"
- image   = docker_image.youtube-api-image.latest
- tty = true
+  name    = "youtube-api"
+  # image   = docker_image.youtube-api-image.latest
+  image = "youtube-api"
+  tty = true
 
- networks_advanced {
-   name = docker_network.network.name
- }
+  networks_advanced {
+    name = docker_network.network.name
+  }
 
- env = [
-   # "DATABASE_URL=mysql://root:root@db-vlog.local.brasilhomeoffice.com:3306/youtube-db"
-   "DATABASE_URL=mysql://root:root@youtube-db:3306/youtube-db"
- ]
+  env = [
+    # "DATABASE_URL=mysql://root:root@db-vlog.local.brasilhomeoffice.com:3306/youtube-db"
+    "DATABASE_URL=mysql://root:root@youtube-db:3306/youtube-db"
+  ]
 
   # ---
   # Enable hot reload
@@ -132,15 +134,15 @@ resource "docker_container" "youtube-api-container" {
 
  # ---
  # Traefik labels
- labels {
-   label = "traefik.enable"
-   value = "true"
- }
- labels {
-   label = "traefik.http.routers.youtube-api.rule"
-   value = "Host(`api-vlog.local.brasilhomeoffice.com`)"
- }
- labels {
+  labels {
+    label = "traefik.enable"
+    value = "true"
+  }
+  labels {
+    label = "traefik.http.routers.youtube-api.rule"
+    value = "Host(`api-vlog.local.brasilhomeoffice.com`)"
+  }
+  labels {
     label = "traefik.http.routers.youtube-api.entrypoints"
     value = "websecure"
   }
@@ -148,12 +150,12 @@ resource "docker_container" "youtube-api-container" {
     label = "traefik.http.routers.youtube-api.tls"
     value = "true"
   }
- # Redirect to port inside the container
- # because `yarn dev` uses this port
- labels {
+  # Redirect to port inside the container
+  # because `yarn dev` uses this port
+  labels {
    label = "traefik.http.services.youtube-api.loadbalancer.server.port"
    value = "4000"
- }
+  }
 }
 
 
