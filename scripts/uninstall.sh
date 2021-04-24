@@ -55,6 +55,12 @@ if [[ $FLAG_REMOVE_LOCAL_CONFIG == "1" ]]; then
 fi
 
 # ---
+# Remove trash containers
+docker rm traefik-container
+docker rm youtube-api
+docker rm youtube-website
+
+# ---
 # Display message
 echo "Uninstall finished!"
 echo ""
